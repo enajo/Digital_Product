@@ -1,0 +1,5 @@
+{
+  "name": "One Button App",
+  "dockerFile": "Dockerfile",
+  "appPort": [8000]
+}
