@@ -47,3 +47,11 @@ async def record_click():
     conn.execute('INSERT INTO clicks DEFAULT VALUES')
     conn.commit()
     return {"status": "Click recorded!"}
+
+@app.get("/count")
+async def get_click_count():
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute('SELECT COUNT(*) FROM clicks')
+    (count,) = cursor.fetchone()
+    return {"click_count": count}
