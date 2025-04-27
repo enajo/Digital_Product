@@ -30,12 +30,23 @@ async def home():
     <body>
       <h1>Simple Button</h1>
       <button onclick="clickButton()">Click me!</button>
+      <h2 id="counter">Loading...</h2>
 
       <script>
+        async function fetchCount() {
+          const response = await fetch('/count');
+          const data = await response.json();
+          document.getElementById('counter').innerText = `Total Clicks: ${data.click_count}`;
+        }
+
         async function clickButton() {
           await fetch('/click', { method: 'POST' });
           alert('Click recorded!');
+          await fetchCount(); // Update counter after clicking
         }
+
+        // When page loads, fetch initial count
+        window.onload = fetchCount;
       </script>
     </body>
     </html>
@@ -51,7 +62,6 @@ async def record_click():
 @app.get("/count")
 async def get_click_count():
     conn = sqlite3.connect('db.sqlite')
-    cursor = conn.cursor()
-    cursor.execute('SELECT COUNT(*) FROM clicks')
-    (count,) = cursor.fetchone()
+    cursor = conn.execute('SELECT COUNT(*) FROM clicks')
+    count = cursor.fetchone()[0]
     return {"click_count": count}
