@@ -1,10 +1,18 @@
+// .devcontainer/devcontainer.json
 {
   "name": "QuickDoc Devcontainer",
-  "dockerComposeFile": ["docker-compose.dev.yml"],
-  "service": "backend",               // the service you want VS Code to attach to
-  "workspaceFolder": "/app",          // where in the container your code lives
-  "forwardPorts": [5000, 5173],       // expose both backend & frontend ports
-  "shutdownAction": "stopCompose",    // bring containers down on close
-  "postCreateCommand": "pip install -r backend/requirements.txt",
-  "postStartCommand": "docker-compose -f docker-compose.dev.yml up --build -d"
+  "dockerComposeFile": [
+    // climb out of .devcontainer into the repo root
+    "../docker-compose.dev.yml"
+  ],
+  // the service in your compose file you want VS Code to “attach” to
+  "service": "backend",
+  // where inside the container your code lives
+  "workspaceFolder": "/app",
+  // which ports to forward into the Codespace UI
+  "forwardPorts": [5000, 5173],
+  // after the container is built/run, this command will be executed inside "backend"
+  "postCreateCommand": "uvicorn main:app --host 0.0.0.0 --port 5000",
+  // so that `code .` maps to /app
+  "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
 }
