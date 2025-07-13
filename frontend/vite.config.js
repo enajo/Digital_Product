@@ -3,32 +3,31 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
-  // Load all environment variables (including those prefixed VITE_) from .env files
+  // 👇 load ALL your .env vars (including VITE_) but we won't actually need VITE_API_URL here
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [react()],
     resolve: {
       alias: {
-        // Use "@/..." to import from src/
         "@": `${process.cwd()}/src`,
       },
     },
     define: {
-      // Make all VITE_ vars available under import.meta.env in your client code
       "import.meta.env": { ...env },
     },
     server: {
-      host: true,
-      port: 5173,
+      host: true,     // listen on 0.0.0.0 so Codespaces can route to it
+      port: 5173,     // your Vite port
       proxy: {
-        // Proxy /api/* → your Flask backend (default localhost:5000 or override via VITE_API_URL)
+        // anything under /api/* gets forwarded to your Flask app
         "/api": {
-          target: env.VITE_API_URL || "http://localhost:5000",
+          target: "http://localhost:5000",
           changeOrigin: true,
           secure: false,
-          // keep the /api prefix so your Flask routes still match
-          rewrite: (path) => path,
+          // **don’t strip** the /api prefix so that
+          // /api/auth/register → http://localhost:5000/api/auth/register
+          rewrite: (path) => path
         },
       },
     },
