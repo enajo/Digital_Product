@@ -3,30 +3,32 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
-  // Load .env variables prefixed with VITE_ into import.meta.env
+  // Load all environment variables (including those prefixed VITE_) from .env files
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [react()],
     resolve: {
       alias: {
-        "@": `${process.cwd()}/src`,   // import paths starting with @ map to src/
+        // Use "@/..." to import from src/
+        "@": `${process.cwd()}/src`,
       },
     },
     define: {
-      // expose all loaded VITE_ variables to your client code
+      // Make all VITE_ vars available under import.meta.env in your client code
       "import.meta.env": { ...env },
     },
     server: {
       host: true,
       port: 5173,
       proxy: {
-        // any request starting with /api will be forwarded to your Flask backend
+        // Proxy /api/* → your Flask backend (default localhost:5000 or override via VITE_API_URL)
         "/api": {
           target: env.VITE_API_URL || "http://localhost:5000",
           changeOrigin: true,
           secure: false,
-           rewrite: (path) => path.replace(/^\/api/, ''),
+          // keep the /api prefix so your Flask routes still match
+          rewrite: (path) => path,
         },
       },
     },
