@@ -1,8 +1,8 @@
 // src/services/api.js
 import axios from "axios";
 
-// 🔥 HARD-CODED DEV URL now includes the `/api` prefix
-const baseURL = "http://localhost:5000/api";
+// Use a relative base so Vite can proxy /api → backend
+const baseURL = "/api";
 
 const api = axios.create({
   baseURL,
