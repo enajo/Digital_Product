@@ -5,7 +5,7 @@
   "dockerComposeFile": ["../docker-compose.dev.yml"],
 
   // which service to attach VS Code to by default:
-  "service": "frontend",
+  "service": "backend",
 
   // where your code lives inside the container:
   "workspaceFolder": "/app",
