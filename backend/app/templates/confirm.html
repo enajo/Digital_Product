@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head><title>QuickDoc Confirmation</title></head>
+  <body>
+    {% if status == "success" %}
+      <h1>✅ Your appointment is confirmed!</h1>
+    {% elif status == "taken" %}
+      <h1>❌ Sorry, that slot has already been booked.</h1>
+    {% else %}
+      <h1>⚠️ This link is invalid or has expired.</h1>
+    {% endif %}
+  </body>
+</html>

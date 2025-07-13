@@ -1,0 +1,10 @@
+{
+  "name": "QuickDoc Devcontainer",
+  "dockerComposeFile": ["docker-compose.dev.yml"],
+  "service": "backend",               // the service you want VS Code to attach to
+  "workspaceFolder": "/app",          // where in the container your code lives
+  "forwardPorts": [5000, 5173],       // expose both backend & frontend ports
+  "shutdownAction": "stopCompose",    // bring containers down on close
+  "postCreateCommand": "pip install -r backend/requirements.txt",
+  "postStartCommand": "docker-compose -f docker-compose.dev.yml up --build -d"
+}

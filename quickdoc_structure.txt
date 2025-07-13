@@ -1,0 +1,103 @@
+quickdoc/
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   ├── main.py
+│   │
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py              # Patient, Clinic, Admin base models
+│   │   │   ├── slot.py              # Appointment slot with status
+│   │   │   ├── booking.py           # Booking records
+│   │   │   ├── standby.py           # StandbyMode settings
+│   │   │   └── dnd.py               # Do-Not-Disturb preferences
+│   │
+│   │   ├── routes/
+│   │   │   ├── __init__.py
+│   │   │   ├── auth.py              # Login/register (JWT)
+│   │   │   ├── patient.py           # View/book slots, standby, DND
+│   │   │   ├── clinic.py            # Manage slots, view bookings
+│   │   │   └── admin.py             # System metrics, users
+│   │
+│   │   ├── services/
+│   │   │   ├── __init__.py
+│   │   │   ├── auth_service.py
+│   │   │   ├── slot_service.py
+│   │   │   ├── notification_service.py # Smart filtering, alerting
+│   │   │   └── booking_service.py      # Atomic booking logic
+│   │
+│   │   ├── utils/
+│   │   │   ├── __init__.py
+│   │   │   ├── jwt.py
+│   │   │   ├── validators.py
+│   │   │   └── time_utils.py
+│   │
+│   ├── Dockerfile
+│   ├── requirements.txt
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── SlotCard.jsx
+│   │   │   ├── ToggleSwitch.jsx
+│   │   │   └── Navbar.jsx
+│   │
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── dashboard/
+│   │   │   │   ├── PatientDashboard.jsx
+│   │   │   │   ├── ClinicDashboard.jsx
+│   │   │   │   ├── AdminDashboard.jsx
+│   │   │   │   └── Settings.jsx       # Standby + DND for patients
+│   │
+│   │   ├── services/
+│   │   │   └── api.js                 # Axios instance + endpoints
+│   │
+│   │   ├── App.jsx
+│   │   ├── index.jsx
+│   │   ├── tailwind.config.js
+│   │
+│   ├── Dockerfile
+│   ├── package.json
+│
+├── database/
+│   ├── init.sql                       # PostgreSQL schema (prod)
+│   ├── seed_data.py                   # Patients, clinics, open slots
+│   ├── migrate.py                     # DB migration logic
+│
+├── .env.template                      # All secret keys & service tokens
+├── docker-compose.yml                 # Spins up full app
+├── README.md
+└── LICENSE
+
+
+| Task                 | Command                          |
+| -------------------- | -------------------------------- |
+| Run backend locally  | `flask run` inside `/backend`    |
+| Run frontend locally | `npm run dev` inside `/frontend` |
+| Run migrations       | `python database/migrate.py`     |
+| Seed data            | `python database/seed_data.py`   |
+| Docker up            | `docker-compose up --build`      |
+
+
+| Role    | Email                                               | Password    |
+| ------- | --------------------------------------------------- | ----------- |
+| Patient | [patient1@example.com](mailto:patient1@example.com) | testpass    |
+| Clinic  | [clinic1@quickdoc.com](mailto:clinic1@quickdoc.com) | password123 |
+| Admin   | [admin@quickdoc.com](mailto:admin@quickdoc.com)     | adminpass   |
+
+
+
+
+what is the one thing that sets you all apart?
+what is the core feature that sets you apart.
+How those the interaction work eg, appointment is open, appointment is taken, is there a queue?
+Can I set off days, and how much time do I have to react
+What else do you need to make this work
+This cure feature needs tot be optimized.
+What is the priority?

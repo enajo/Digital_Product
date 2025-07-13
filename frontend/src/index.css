@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom font family (Poppins) */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Optional: Smooth transitions */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Animate fade in (you can tweak this) */
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

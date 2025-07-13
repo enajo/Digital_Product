@@ -1,3 +1,4 @@
+
 # 🩺 QuickDoc
 
 ### *Get the care you need — when someone else can’t make it.*
@@ -53,3 +54,22 @@ QuickDoc allows:
 - **Tabi** – Business & Frontend  
 - **Ifunaya** – Frontend & Product Design  
 - **Ena** – All-rounder (Tech, Biz, Design)
+
+# ⚕️ QuickDoc
+
+**QuickDoc** is a real-time health tech platform that connects patients with last-minute medical appointment slots released by clinics due to cancellations. The goal is to reduce wasted time and help patients access urgent care faster.
+
+---
+
+## 🚀 Features
+
+- 🧍 **Patients**: Search, filter, and book open appointments by language, location, and timing.
+- 🏥 **Clinics**: Manage schedules, open/close slots, view bookings.
+- 🔔 **Smart Notifications**: Standby queue and Do-Not-Disturb (DND) preferences.
+- 📧 **Email Alerts**: Get notified when a matching appointment opens.
+- 🔐 **Role-Based Access**: Patients, Clinics, and Admins.
+- 📱 **Responsive Design**: Works on mobile, tablet, and desktop.
+- 🐳 **Containerized**: Docker-ready for production and local development.
+
+---
+

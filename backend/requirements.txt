@@ -1,0 +1,24 @@
+# Core Flask
+flask==2.3.2
+flask-cors==4.0.0
+flask-sqlalchemy==3.1.1
+flask-jwt-extended==4.5.2
+flask-mail==0.9.1
+python-dotenv==1.0.1
+
+# PostgreSQL support
+psycopg2-binary==2.9.9
+
+# CLI and database migrations
+click==8.1.7
+
+# Utilities
+Werkzeug==2.3.7
+
+# Optional: for migrations and admin tooling (optional)
+flask-migrate==4.0.4
+# flask-admin==1.6.1
+
+Flask-Cors>=3.0.10
+
+
