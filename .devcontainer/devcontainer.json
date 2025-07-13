@@ -19,7 +19,7 @@
   // which ports to forward to the browser:
   "forwardPorts": [5000, 5173],
 
-  // after the container is created:
+  // after the container is created, install both Python & JS deps:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
 
   // once all services are running, start the frontend:
