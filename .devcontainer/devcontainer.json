@@ -11,7 +11,7 @@
   "workspaceFolder": "/app",
 
   // spin up all three services automatically:
-  "runServices": ["db","backend","frontend"],
+  "runServices": ["db", "backend", "frontend"],
 
   // tear them down when you close VS Code:
   "shutdownAction": "stopCompose",
