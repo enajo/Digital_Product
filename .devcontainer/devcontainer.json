@@ -1,27 +1,11 @@
 {
   "name": "QuickDoc Devcontainer",
-
-  // relative path from .devcontainer/ to your compose file:
   "dockerComposeFile": ["../docker-compose.dev.yml"],
-
-  // which service to attach VS Code to:
   "service": "frontend",
-
-  // where in the container your code lives:
   "workspaceFolder": "/app",
-
-  // bring up all three services together:
-  "runServices": ["db", "backend", "frontend"],
-
-  // tear them down on close:
+  "runServices": ["db","backend","frontend"],
   "shutdownAction": "stopCompose",
-
-  // which ports to forward to the browser:
   "forwardPorts": [5000, 5173],
-
-  // after the container is created, install both Python & JS deps:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
-
-  // once all services are running, start the frontend:
   "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173"
 }
