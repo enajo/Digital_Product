@@ -1,32 +1,15 @@
-// .devcontainer/devcontainer.json
 {
   "name": "QuickDoc Devcontainer",
-
-  // relative path from .devcontainer/ to your compose file
   "dockerComposeFile": ["../docker-compose.dev.yml"],
-
-  // which service VS Code should attach to by default
+  // ATTACH VS CODE TO THE BACKEND so you land in the Flask container by default
   "service": "backend",
-
-  // where your backend code lives inside that container
   "workspaceFolder": "/app",
-
-  // bring up all three services automatically
-  "runServices": ["db", "backend", "frontend"],
-
-  // tear them down when you close VS Code
+  "runServices": ["db","backend","frontend"],
   "shutdownAction": "stopCompose",
-
-  // expose both backend & frontend ports to your browser
   "forwardPorts": [5000, 5173],
-
-  // install both Python & npm dependencies once the container is created
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
-
-  // once services are running, start Vite in dev mode
-  "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
-
-  // install the Docker extension so you can see the Containers view
+  // ← NEW: once the container is running, immediately run your migrations
+  "postStartCommand": "cd /app && flask db upgrade",
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
