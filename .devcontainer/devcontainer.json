@@ -1,29 +1,11 @@
 {
-  // human-friendly name
   "name": "QuickDoc Devcontainer",
-
-  // point at your dev-compose file (it's one level up from .devcontainer/)
   "dockerComposeFile": ["../docker-compose.dev.yml"],
-
-  // which service your editor should attach to
   "service": "frontend",
-
-  // once you're inside the container, this is your working dir
   "workspaceFolder": "/app",
-
-  // spin up all three services (backend, frontend & db)
-  // otherwise only “frontend” would be started
-  "runServices": ["db","backend","frontend"],
-
-  // when you close Codespace, bring all of them down
+  "runServices": ["db", "backend", "frontend"],
   "shutdownAction": "stopCompose",
-
-  // expose both ports to your browser
   "forwardPorts": [5000, 5173],
-
-  // after container is created, install both pip & npm deps
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
-
-  // once everything is up, start vite in watch mode automatically
   "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173"
 }
