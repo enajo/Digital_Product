@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         // anything under /api/* gets forwarded to your Flask app
         "/api": {
-          target: "http://localhost:5000",
+          target: "http://backend:5000",
           changeOrigin: true,
           secure: false,
           // **don’t strip** the /api prefix so that
