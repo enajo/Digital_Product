@@ -1,31 +1,31 @@
 {
   "name": "QuickDoc Devcontainer",
 
-  // relative path from .devcontainer/ to your compose file:
+  // relative path from .devcontainer/ to your compose file
   "dockerComposeFile": ["../docker-compose.dev.yml"],
 
-  // which service to attach VS Code to by default:
+  // which service VS Code should attach to by default
   "service": "backend",
 
-  // auto-detected workspace folder (Codespaces will mount your repo here)
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  // once inside the container, this is your working dir
+  "workspaceFolder": "/app",
 
-  // bring up all three services together:
+  // spin up all three services together
   "runServices": ["db", "backend", "frontend"],
 
-  // tear them down when you close VS Code:
+  // bring them down on close
   "shutdownAction": "stopCompose",
 
-  // expose both ports:
+  // forward both Flask & Vite ports
   "forwardPorts": [5000, 5173],
 
-  // install deps after container creation:
+  // install Python & JS deps after container creation
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
 
-  // start the frontend once everything is up:
+  // once everything’s up, kick off the frontend dev server
   "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
 
-  // install Docker extension so you can attach to running containers:
+  // get the Docker extension for the Containers view
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
