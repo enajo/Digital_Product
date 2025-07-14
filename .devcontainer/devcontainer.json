@@ -1,23 +1,12 @@
 {
   "name": "QuickDoc Devcontainer",
-  "dockerComposeFile": [
-    "../docker-compose.dev.yml"
-  ],
+  "dockerComposeFile": ["../docker-compose.dev.yml"],
   "service": "backend",
   "workspaceFolder": "/app",
-  "runServices": [
-    "db",
-    "backend",
-    "frontend"
-  ],
+  "runServices": ["db", "backend", "frontend"],
   "shutdownAction": "stopCompose",
-  "forwardPorts": [
-    5000,
-    5173
-  ],
+  "forwardPorts": [5000, 5173],
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
   "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
-  "extensions": [
-    "ms-azuretools.vscode-docker"
-  ]
+  "extensions": ["ms-azuretools.vscode-docker"]
 }
