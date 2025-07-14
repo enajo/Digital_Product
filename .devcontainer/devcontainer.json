@@ -1,12 +1,33 @@
+// .devcontainer/devcontainer.json
 {
   "name": "QuickDoc Devcontainer",
+
+  // path *from* .devcontainer/ to your compose file:
   "dockerComposeFile": ["../docker-compose.dev.yml"],
+
+  // the service to attach the editor to:
   "service": "backend",
+
+  // where in the container your code lives:
   "workspaceFolder": "/app",
+
+  // spin up all three services automatically:
   "runServices": ["db", "backend", "frontend"],
+
+  // tear them down when you close VS Code:
   "shutdownAction": "stopCompose",
+
+  // expose both ports:
   "forwardPorts": [5000, 5173],
+
+  // after the container is created, install dependencies:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
-  "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
-  "extensions": ["ms-azuretools.vscode-docker"]
+
+  // once all services are up, run migrations then start Vite:
+  "postStartCommand": "docker-compose -f ../docker-compose.dev.yml exec backend flask db upgrade && npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
+
+  // so you can inspect & control your containers:
+  "extensions": [
+    "ms-azuretools.vscode-docker"
+  ]
 }
