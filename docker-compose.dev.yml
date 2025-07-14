@@ -1,8 +1,9 @@
+# docker-compose.dev.yml
 version: '3.9'
 
 services:
   # ───────────────────────────────────────────────
-  # Flask backend (dev — hot reload)
+  # Flask backend (dev — hot reload + auto-migrations)
   # ───────────────────────────────────────────────
   backend:
     build:
@@ -21,10 +22,15 @@ services:
       FLASK_ENV: development
       FLASK_APP: app:create_app
       FLASK_DEBUG: "1"
-    # ← run migrations, then start the dev server
     command: >
       sh -c "
+        # 1) flask db init if needed (ignore errors on rerun)
+        flask db init 2>/dev/null || true &&
+        # 2) autogenerate any missing migrations
+        flask db migrate -m 'auto schema' 2>/dev/null || true &&
+        # 3) apply all migrations
         flask db upgrade &&
+        # 4) finally start Flask
         flask run --host=0.0.0.0 --port=5000 --reload
       "
     ports:
@@ -44,11 +50,7 @@ services:
     environment:
       CHOKIDAR_USEPOLLING: "true"
       BROWSER: none
-    command: >
-      sh -c "
-        npm install &&
-        npm run dev -- --host 0.0.0.0 --port 5173
-      "
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
     ports:
       - "5173:5173"
     depends_on:
