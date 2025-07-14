@@ -23,15 +23,11 @@
   // after the container is created, install dependencies:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
 
-  // once all services are up, run migrations then start Vite:
-  "postStartCommand": [
-    "docker-compose -f ../docker-compose.dev.yml exec backend flask db init || echo 'already inited'",
-    "docker-compose -f ../docker-compose.dev.yml exec backend flask db migrate -m \"initial schema\" || echo 'already migrated'",
-    "docker-compose -f ../docker-compose.dev.yml exec backend flask db upgrade",
-    "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173"
-  ],
+  // once all services are up, simply start Vite;
+  // the backend will auto-create its tables on first boot:
+  "postStartCommand": "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
 
-  // so you can inspect & control your containers:
+  // install Docker extension so you can inspect containers:
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
