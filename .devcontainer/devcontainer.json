@@ -5,30 +5,43 @@
   // path from .devcontainer/ to your compose file:
   "dockerComposeFile": ["../docker-compose.dev.yml"],
 
-  // the service VS Code will attach to:
+  // attach VS Code to your Flask service:
   "service": "backend",
 
-  // where in the container your code lives:
+  // where your code lives inside the container:
   "workspaceFolder": "/app",
 
-  // bring up all three services (db, backend, frontend) together:
+  // spin up all three services together:
   "runServices": ["db", "backend", "frontend"],
 
-  // tear them down when you close the Codespace:
+  // tear them down when you close:
   "shutdownAction": "stopCompose",
 
-  // make both ports available in your browser:
+  // ports to forward for browser access:
   "forwardPorts": [5000, 5173],
 
-  // after the container is built, install Python & JS deps:
+  // install Python & JS deps once after build:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
 
   // every time you start (or rebuild) the Codespace:
-  // 1) apply any new migrations
-  // 2) then launch the React dev server
-  "postStartCommand": "flask db upgrade && npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173",
+  // 1) if migrations folder is missing, init + generate an “initial schema” migration  
+  // 2) apply all migrations to bring your schema up to date  
+  // 3) finally, boot your React dev server
+  "postStartCommand": [
+    // go into the Flask app folder
+    "cd backend",
 
-  // give you the Docker extension so you can inspect containers
+    // only initialize Alembic & scaffold your very first migration if there's no migrations folder
+    "if [ ! -d migrations ]; then flask db init; flask db migrate -m \"initial schema\"; fi",
+
+    // apply all pending migrations
+    "flask db upgrade",
+
+    // come back out and start the React server
+    "cd ../frontend && npm run dev -- --host 0.0.0.0 --port 5173"
+  ].join(" && "),
+
+  // give you the Docker extension to inspect containers
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
