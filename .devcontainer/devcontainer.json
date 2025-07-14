@@ -1,18 +1,32 @@
 // .devcontainer/devcontainer.json
 {
   "name": "QuickDoc Devcontainer",
+
+  // relative to .devcontainer/
   "dockerComposeFile": ["../docker-compose.dev.yml"],
+
+  // attach VS Code to the Flask service
   "service": "backend",
+
+  // inside the backend container, your code lives at /app
   "workspaceFolder": "/app",
+
+  // start all three services together
   "runServices": ["db", "backend", "frontend"],
+
+  // tear them down on close
   "shutdownAction": "stopCompose",
+
+  // expose both ports
   "forwardPorts": [5000, 5173],
-  "postCreateCommand":
-    // only install Python deps here; the Frontend container handles its own npm install
-    "pip install -r requirements.txt",
-  "postStartCommand":
-    // run (or re-run) any pending migrations
-    "flask db upgrade",
+
+  // after the container is created, install Python deps
+  "postCreateCommand": "pip install -r requirements.txt",
+
+  // once everything’s up, run your migrations
+  "postStartCommand": "flask db upgrade",
+
+  // give you the Docker UI in Codespaces
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
