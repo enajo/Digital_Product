@@ -1,18 +1,18 @@
+// .devcontainer/devcontainer.json
 {
   "name": "QuickDoc Devcontainer",
   "dockerComposeFile": ["../docker-compose.dev.yml"],
   "service": "backend",
-  "workspaceFolder": "/app",            // inside container, /app is your backend folder
+  "workspaceFolder": "/app",
   "runServices": ["db", "backend", "frontend"],
   "shutdownAction": "stopCompose",
   "forwardPorts": [5000, 5173],
   "postCreateCommand":
-    // install Python deps (requirements.txt lives at /app)
-    // then JS deps (frontend is one level up in ../frontend)
-    "pip install -r requirements.txt && npm install --prefix ../frontend",
+    // only install Python deps here; the Frontend container handles its own npm install
+    "pip install -r requirements.txt",
   "postStartCommand":
-    // upgrade your database (runs init+migrate if first time), then start Vite
-    "flask db upgrade && npm run --prefix ../frontend dev -- --host 0.0.0.0 --port 5173",
+    // run (or re-run) any pending migrations
+    "flask db upgrade",
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
