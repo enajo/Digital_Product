@@ -2,46 +2,38 @@
 {
   "name": "QuickDoc Devcontainer",
 
-  // path from .devcontainer/ to your compose file:
+  // path *from* .devcontainer/ to your compose file:
   "dockerComposeFile": ["../docker-compose.dev.yml"],
 
-  // attach VS Code to your Flask service:
+  // the service to attach the editor to:
   "service": "backend",
 
-  // where your code lives inside the container:
+  // where in the container your code lives:
   "workspaceFolder": "/app",
 
-  // spin up all three services together:
+  // spin up all three services automatically:
   "runServices": ["db", "backend", "frontend"],
 
-  // tear them down when you close:
+  // tear them down when you close VS Code:
   "shutdownAction": "stopCompose",
 
-  // ports to forward for browser access:
+  // expose both ports:
   "forwardPorts": [5000, 5173],
 
-  // install Python & JS deps once after build:
+  // after the container is created, install dependencies:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
 
-  // every time you start (or rebuild) the Codespace:
-  // 1) if migrations folder is missing, init + generate an “initial schema” migration  
-  // 2) apply all migrations to bring your schema up to date  
-  // 3) finally, boot your React dev server
+  // once all services are up, initialize/migrate/upgrade DB then start Vite:
   "postStartCommand": [
-    // go into the Flask app folder
-    "cd backend",
+    "docker-compose -f ../docker-compose.dev.yml exec backend sh -c \"\
+      flask db init || echo 'already inited'; \
+      flask db migrate -m 'initial schema' || echo 'already migrated'; \
+      flask db upgrade\
+    \"",
+    "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173"
+  ],
 
-    // only initialize Alembic & scaffold your very first migration if there's no migrations folder
-    "if [ ! -d migrations ]; then flask db init; flask db migrate -m \"initial schema\"; fi",
-
-    // apply all pending migrations
-    "flask db upgrade",
-
-    // come back out and start the React server
-    "cd ../frontend && npm run dev -- --host 0.0.0.0 --port 5173"
-  ].join(" && "),
-
-  // give you the Docker extension to inspect containers
+  // so you can inspect & control your containers:
   "extensions": [
     "ms-azuretools.vscode-docker"
   ]
