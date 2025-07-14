@@ -23,13 +23,11 @@
   // after the container is created, install dependencies:
   "postCreateCommand": "pip install -r backend/requirements.txt && npm install --prefix frontend",
 
-  // once all services are up, initialize/migrate/upgrade DB then start Vite:
+  // once all services are up, run migrations then start Vite:
   "postStartCommand": [
-    "docker-compose -f ../docker-compose.dev.yml exec backend sh -c \"\
-      flask db init || echo 'already inited'; \
-      flask db migrate -m 'initial schema' || echo 'already migrated'; \
-      flask db upgrade\
-    \"",
+    "docker-compose -f ../docker-compose.dev.yml exec backend flask db init || echo 'already inited'",
+    "docker-compose -f ../docker-compose.dev.yml exec backend flask db migrate -m \"initial schema\" || echo 'already migrated'",
+    "docker-compose -f ../docker-compose.dev.yml exec backend flask db upgrade",
     "npm run --prefix frontend dev -- --host 0.0.0.0 --port 5173"
   ],
 
