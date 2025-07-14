@@ -25,5 +25,12 @@ COPY . .
 
 EXPOSE 5000
 
-# Run flask with reload on code changes
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
+# On container start: init/migrate (once), always upgrade, then run Flask
+CMD [ "sh", "-lc", "\
+    if [ ! -d migrations ]; then \
+      flask db init && \
+      flask db migrate -m 'initial schema'; \
+    fi && \
+    flask db upgrade && \
+    exec flask run --host=0.0.0.0 --port=5000 --reload\
+  " ]
