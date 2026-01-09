@@ -50,9 +50,9 @@ QuickDoc allows:
 
 ## 👥 Built by Team FourNote
 
-- **Ondess** – Business & Database  
-- **Tabi** – Business & Frontend  
-- **Ifunaya** – Frontend & Product Design  
+- **Glory** – Business & Product Management  
+- **Tabi** –  Frontend  
+- **Ifunaya** – Backend  
 - **Ena** – All-rounder (Tech, Biz, Design)
 
 # ⚕️ QuickDoc
@@ -72,4 +72,5 @@ QuickDoc allows:
 - 🐳 **Containerized**: Docker-ready for production and local development.
 
 ---
+
 
